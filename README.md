@@ -1,5 +1,7 @@
 # docker-tools
 
+docker-tools is a collection of "commands" that are missing in the docker environment
+
 ## Status
 
 Project is in a ongoing development, features are added if needed
