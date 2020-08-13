@@ -1,0 +1,38 @@
+dist: bionic
+
+language: go
+
+env: GO111MODULE=on
+
+go:
+  - 1.14.x
+
+script:
+  - export TAG=$(git describe --tags --abbrev=0)
+  - echo "Tag $TAG"
+  - GOOS=windows GOARCH=amd64 go build -ldflags "-s -w -X github.com/bbaerthlein/docker-tools/config.Version=$TAG" -o docker-tools_win_x64.exe
+  - GOOS=linux GOARCH=amd64 go build -ldflags "-s -w -X github.com/bbaerthlein/docker-tools/config.Version=$TAG" -o docker-tools_linux_x64.exe
+  - GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w -X github.com/bbaerthlein/docker-tools/config.Version=$TAG" -o docker-tools_osx_x64.exe
+  - GOOS=windows GOARCH=386 go build -ldflags "-s -w -X github.com/bbaerthlein/docker-tools/config.Version=$TAG" -o docker-tools_win_x86.exe
+  - GOOS=linux GOARCH=386 go build -ldflags "-s -w -X github.com/bbaerthlein/docker-tools/config.Version=$TAG" -o docker-tools_linux_x86.exe
+  - GOOS=darwin GOARCH=386 go build -ldflags "-s -w -X github.com/bbaerthlein/docker-tools/config.Version=$TAG" -o docker-tools_osx_x86.exe
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key: $GH_TOKEN
+  file_glob: true
+  file:
+    - "docker-tools_win_x64.exe"
+    - "docker-tools_linux_x64.exe"
+    - "docker-tools_osx_x64.exe"
+    - "docker-tools_win_x86.exe"
+    - "docker-tools_linux_x86.exe"
+    - "docker-tools_osx_x86.exe"
+  on:
+    tags: true
