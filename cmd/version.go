@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/bbaerthlein/docker-tools/config"
+	"github.com/benjaminbear/docker-tools/config"
 	"github.com/spf13/cobra"
 )
 

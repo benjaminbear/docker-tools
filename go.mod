@@ -1,4 +1,4 @@
-module github.com/bbaerthlein/docker-tools
+module github.com/benjaminbear/docker-tools
 
 go 1.14
 
